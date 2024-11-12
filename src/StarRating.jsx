@@ -1,14 +1,12 @@
 import { useState } from "react"
 
-export default function StarRating({ maxRating = 5, color = '#fcc419', size = '48',setMovieRate }) {
+function StarRating({ maxRating = 5, color = '#fcc419', size = '48',setMovieRate }) {
 
     const [rating, setRating] = useState(0)
     const [tempRating, setTempRating] = useState(0)
 
     function handleRating(rating){
         setRating(rating)
-        
-        setMovieRate(rating)
     }
 
     return (
@@ -57,7 +55,7 @@ function Star({ onRate, full, onHoverIn, onHoverOut,color,size }) {
         </span>
     )
 }
-
+export default StarRating;
 /*
 FULL STAR
 
