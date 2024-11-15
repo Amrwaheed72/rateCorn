@@ -328,6 +328,10 @@ function WatchedMovie({ movie,onDeleteWatched }) {
       <h3>{movie.title}</h3>
       <div>
         <p>
+          <span>⭐️</span>
+          <span>{movie.imdbRating}</span>
+        </p>
+        <p>
           <span>🌟</span>
           <span>{movie.userRating}</span>
         </p>
