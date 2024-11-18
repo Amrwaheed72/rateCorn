@@ -332,10 +332,6 @@ function WatchedMovie({ movie,onDeleteWatched }) {
           <span>{movie.imdbRating}</span>
         </p>
         <p>
-          <span>⭐️</span>
-          <span>{movie.imdbRating}</span>
-        </p>
-        <p>
           <span>🌟</span>
           <span>{movie.userRating}</span>
         </p>
