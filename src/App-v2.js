@@ -67,6 +67,7 @@ export default function App() {
       setError("")
       return
     }
+    handleClose()
     fetchingMovies();
 
     return function () {
@@ -205,6 +206,7 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
   const [isLoading, setIsLoading] = useState(false)
   const [userRating, setUserRating] = useState("")
 
+
   const isWatched = watched.map(movie => movie.imdbId).includes(selectedId)
   const WatchedUserRating = watched.find(movie => movie.imdbId === selectedId)?.userRating
 
@@ -239,21 +241,6 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
     if (!title) return;
     document.title = `Movie | ${title}`
   }, [title])
-
-  useEffect(() => {
-    function callBack(e) {
-      if (e.key === 'Escape') {
-        handleClose();
-      }
-    }
-
-    document.addEventListener("keydown", callBack);
-
-    return () => {
-      document.removeEventListener("keydown", callBack);
-    };
-  }, [handleClose]);
-
 
   return (
     <div className="details">
