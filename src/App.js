@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from './StarRating'
 
 
@@ -16,8 +16,8 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null)
   // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(()=>{
-    const storedMovies=localStorage.getItem('watched')
+  const [watched, setWatched] = useState(() => {
+    const storedMovies = localStorage.getItem('watched')
     return JSON.parse(storedMovies)
   });
 
@@ -38,9 +38,9 @@ export default function App() {
     setWatched(watched => watched.filter(movie => movie.imdbId !== id))
   }
 
-  useEffect(function(){
-    localStorage.setItem('watched',JSON.stringify(watched))
-  },[watched])
+  useEffect(function () {
+    localStorage.setItem('watched', JSON.stringify(watched))
+  }, [watched])
 
   useEffect(() => {
     if (!query) return;
@@ -132,7 +132,20 @@ function Logo() {
   )
 }
 function Search({ query, setQuery }) {
+  const inputEl = useRef(null)
 
+  useEffect(function () {
+
+    function callback(e) {
+      if(document.activeElement===inputEl.current) return ;
+      if(e.code==='Enter'){
+        inputEl.current.focus()
+        setQuery('')
+      }
+    }
+    document.addEventListener('keydown', callback)
+    return () => document.addEventListener('keydown', callback)
+  }, [setQuery])
   return (
     <input
       className="search"
@@ -140,6 +153,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   )
 }
@@ -213,6 +227,13 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
   const [movie, setMovie] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [userRating, setUserRating] = useState("")
+  const countRef=useRef(0)
+
+
+  useEffect(function(){
+    if(userRating)
+      countRef.current=countRef.current+1
+  },[userRating])
 
   const isWatched = watched.map(movie => movie.imdbId).includes(selectedId)
   const WatchedUserRating = watched.find(movie => movie.imdbId === selectedId)?.userRating
@@ -227,7 +248,8 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
       poster,
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
-      userRating
+      userRating,
+      countRatingDecisions:countRef.current
     }
     handleAddWatched(newWatchedMovie)
     handleClose()
