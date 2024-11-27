@@ -1,5 +1,10 @@
-import { useEffect,useState,useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import StarRating from "../StarRating"
+import Loader from "./Loader"
+
+
+const KEY = '6a6db6da'
+
 function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
 
     const [movie, setMovie] = useState({})
@@ -15,7 +20,6 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
 
     const isWatched = watched.map(movie => movie.imdbId).includes(selectedId)
     const WatchedUserRating = watched.find(movie => movie.imdbId === selectedId)?.userRating
-
     const { Title: title, Year: year, Poster: poster, Runtime: runtime, imdbRating, Plot: plot, Released: released, Actors: actors, Director: director, Genre: genre } = movie;
 
     function AddWathced() {
@@ -62,7 +66,6 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
             document.removeEventListener("keydown", callBack);
         };
     }, [handleClose]);
-
 
     return (
         <div className="details">

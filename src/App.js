@@ -1,11 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import StarRating from './StarRating'
+import { useEffect, useState } from "react";
 import WatchedList from "./Components/WatchedList";
 import Summery from "./Components/Summery";
-
+import NavBar from './Components/NavBar'
+import Logo from './Components/Logo'
+import Search from './Components/Search'
+import Results from "./Components/Results";
+import Main from './Components/Main'
+import Box from "./Components/Box";
+import MovieList from "./Components/MovieList";
+import Loader from "./Components/Loader";
+import ErrorMessage from "./Components/ErrorMessage";
+import SelectedMovie from "./Components/SelectedMovie";
 
 const KEY = '6a6db6da'
-
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -106,61 +113,3 @@ export default function App() {
     </div>
   );
 }
-
-function ErrorMessage({ message }) {
-  return <p className="error">{message}</p>
-}
-
-function NavBar({ children }) {
-  return (
-    <nav className="nav-bar">
-      {children}
-    </nav>
-  )
-}
-
-
-function Logo() {
-  return (
-    <div className="logo">
-      <span role="img">🍿</span>
-      <h1>usePopcorn</h1>
-    </div>
-  )
-}
-function Search({ query, setQuery }) {
-  const inputEl = useRef(null)
-
-  useEffect(function () {
-
-    function callback(e) {
-      if(document.activeElement===inputEl.current) return ;
-      if(e.code==='Enter'){
-        inputEl.current.focus()
-        setQuery('')
-      }
-    }
-    document.addEventListener('keydown', callback)
-    return () => document.addEventListener('keydown', callback)
-  }, [setQuery])
-  return (
-    <input
-      className="search"
-      type="text"
-      placeholder="Search movies..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      ref={inputEl}
-    />
-  )
-}
-function Loader() {
-  return (
-    <p className="loader"></p>
-  )
-}
-
-
-
-
-
