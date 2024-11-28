@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import StarRating from "../StarRating"
 import Loader from "./Loader"
+import { useKey } from "./useKey"
 
 
 const KEY = '6a6db6da'
@@ -52,21 +53,9 @@ function SelectedMovie({ selectedId, handleClose, handleAddWatched, watched }) {
         if (!title) return;
         document.title = `Movie | ${title}`
     }, [title])
+    useKey(handleClose, 'Escape')
 
-    useEffect(() => {
-        function callBack(e) {
-            if (e.key === 'Escape') {
-                handleClose();
-            }
-        }
-
-        document.addEventListener("keydown", callBack);
-
-        return () => {
-            document.removeEventListener("keydown", callBack);
-        };
-    }, [handleClose]);
-
+    
     return (
         <div className="details">
             {isLoading ? <Loader /> :
