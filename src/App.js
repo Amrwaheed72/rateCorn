@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import WatchedList from "./Components/WatchedList";
 import Summery from "./Components/Summery";
 import NavBar from './Components/NavBar'
